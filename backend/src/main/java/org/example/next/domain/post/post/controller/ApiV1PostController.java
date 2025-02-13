@@ -12,6 +12,7 @@ import org.example.next.domain.post.post.dto.PostWithContentDto;
 import org.example.next.domain.post.post.entity.Post;
 import org.example.next.domain.post.post.service.PostService;
 import org.example.next.global.Rq;
+import org.example.next.global.dto.EmptyData;
 import org.example.next.global.dto.RsData;
 import org.example.next.global.exception.ServiceException;
 import org.hibernate.validator.constraints.Length;
@@ -109,7 +110,7 @@ public class ApiV1PostController {
             description = "작성자와 관리자만 글 삭제 가능"
     )
     @DeleteMapping("/{id}")
-    public RsData<Void> delete(@PathVariable long id) {
+    public RsData<EmptyData> delete(@PathVariable long id) {
 
         Member actor = rq.getActor();
         Post post = postService.getItem(id).get();

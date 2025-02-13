@@ -222,30 +222,31 @@ export interface components {
         ModifyReqBody: {
             content?: string;
         };
-        RsDataVoid: {
-            code?: string;
-            msg?: string;
-            data?: Record<string, never>;
+        EmptyData: Record<string, never>;
+        RsDataEmptyData: {
+            code: string;
+            msg: string;
+            data: components["schemas"]["EmptyData"];
         };
         PostWithContentDto: {
             /** Format: int64 */
-            id?: number;
-            title?: string;
-            content?: string;
+            id: number;
+            title: string;
+            content: string;
             /** Format: int64 */
-            authorId?: number;
-            authorName?: string;
-            opened?: boolean;
-            listed?: boolean;
+            authorId: number;
+            authorName: string;
+            opened: boolean;
+            listed: boolean;
             /** Format: date-time */
-            createdDatetime?: string;
+            createdDatetime: string;
             /** Format: date-time */
-            modifiedDatetime?: string;
+            modifiedDatetime: string;
         };
         RsDataPostWithContentDto: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["PostWithContentDto"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["PostWithContentDto"];
         };
         WriteReqBody: {
             title: string;
@@ -268,9 +269,9 @@ export interface components {
             modifiedTime?: string;
         };
         RsDataCommentDto: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["CommentDto"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["CommentDto"];
         };
         LoginReqBody: {
             username: string;
@@ -291,9 +292,9 @@ export interface components {
             nickname?: string;
         };
         RsDataLoginResBody: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["LoginResBody"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["LoginResBody"];
         };
         JoinReqBody: {
             username?: string;
@@ -301,12 +302,12 @@ export interface components {
             nickname?: string;
         };
         RsDataMemberDto: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["MemberDto"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["MemberDto"];
         };
         PageDto: {
-            items?: components["schemas"]["PostDto"][];
+            items: components["schemas"]["PostDto"][];
             /** Format: int64 */
             totalElementSize?: number;
             /** Format: int32 */
@@ -318,27 +319,27 @@ export interface components {
         };
         PostDto: {
             /** Format: int64 */
-            id?: number;
-            title?: string;
+            id: number;
+            title: string;
             /** Format: int64 */
-            authorId?: number;
-            authorName?: string;
-            opened?: boolean;
-            listed?: boolean;
+            authorId: number;
+            authorName: string;
+            opened: boolean;
+            listed: boolean;
             /** Format: date-time */
-            createdDatetime?: string;
+            createdDatetime: string;
             /** Format: date-time */
-            modifiedDatetime?: string;
+            modifiedDatetime: string;
         };
         RsDataPageDto: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["PageDto"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["PageDto"];
         };
         RsDataStatisticsResBody: {
-            code?: string;
-            msg?: string;
-            data?: components["schemas"]["StatisticsResBody"];
+            code: string;
+            msg: string;
+            data: components["schemas"]["StatisticsResBody"];
         };
         StatisticsResBody: {
             /** Format: int64 */
@@ -402,7 +403,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataEmptyData"];
                 };
             };
         };
@@ -425,7 +426,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataEmptyData"];
                 };
             };
         };
@@ -495,7 +496,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataEmptyData"];
                 };
             };
         };
@@ -725,7 +726,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["RsDataVoid"];
+                    "application/json;charset=UTF-8": components["schemas"]["RsDataEmptyData"];
                 };
             };
         };

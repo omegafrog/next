@@ -9,6 +9,7 @@ import org.example.next.domain.post.comment.entity.Comment;
 import org.example.next.domain.post.post.entity.Post;
 import org.example.next.domain.post.post.service.PostService;
 import org.example.next.global.Rq;
+import org.example.next.global.dto.EmptyData;
 import org.example.next.global.dto.RsData;
 import org.example.next.global.exception.ServiceException;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,7 +91,7 @@ public class ApiV1CommentController {
     )
     @PutMapping("{id}")
     @Transactional
-    public RsData<Void> modify(@PathVariable long postId, @PathVariable long id, @RequestBody ModifyReqBody reqBody) {
+    public RsData<EmptyData> modify(@PathVariable long postId, @PathVariable long id, @RequestBody ModifyReqBody reqBody) {
 
         Member actor = rq.getActor();
 
@@ -112,7 +113,7 @@ public class ApiV1CommentController {
 
     @DeleteMapping("{id}")
     @Transactional
-    public RsData<Void> delete(@PathVariable long postId, @PathVariable long id) {
+    public RsData<EmptyData> delete(@PathVariable long postId, @PathVariable long id) {
 
         Member actor = rq.getActor();
         Post post = postService.getItem(postId).orElseThrow(

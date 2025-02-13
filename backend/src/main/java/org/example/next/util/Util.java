@@ -2,6 +2,7 @@ package org.example.next.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class Util {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 
     public static class Json{
 
@@ -28,9 +29,6 @@ public class Util {
             }
         }
 
-        public static int toString(RsData rsData) {
-            return 0;
-        }
     }
 
     public static class Jwt{

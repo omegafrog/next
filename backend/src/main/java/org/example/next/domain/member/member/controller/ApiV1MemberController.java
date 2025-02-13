@@ -10,6 +10,7 @@ import org.example.next.domain.member.member.dto.MemberDto;
 import org.example.next.domain.member.member.entity.Member;
 import org.example.next.domain.member.member.service.MemberService;
 import org.example.next.global.Rq;
+import org.example.next.global.dto.EmptyData;
 import org.example.next.global.dto.RsData;
 import org.example.next.global.exception.ServiceException;
 import org.springframework.web.bind.annotation.*;
@@ -75,7 +76,7 @@ public class ApiV1MemberController {
 
     @Operation(summary = "로그아웃", description = "로그아웃 시 쿠키 삭제")
     @DeleteMapping("/logout")
-    public RsData<Void> logout() {
+    public RsData<EmptyData> logout() {
         rq.removeCookie("accessToken");
         rq.removeCookie("apiKey");
         return new RsData<>("200-1", "로그아웃 되었습니다.");
