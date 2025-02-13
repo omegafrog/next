@@ -1,3 +1,10 @@
+import { paths } from "@/lib/backend/apiV1/schema";
+import createClient from "openapi-fetch";
+
+const client = createClient<paths>({
+  baseUrl: "http://localhost:8080",
+});
+
 export default async function PostList({
   searchParams,
 }: {
@@ -5,23 +12,27 @@ export default async function PostList({
 }) {
   const { keywordType = "title", keyword = "" } = await searchParams;
 
-  const response = await fetch(
-    `http://localhost:8080/api/v1/posts?keyword-type=${keywordType}&keyword=${keyword}`
-  );
+  // const response = await fetch(
+  //   `http://localhost:8080/api/v1/posts?keyword-type=${keywordType}&keyword=${keyword}`
+  // );
 
-  if (!response.ok) {
-    throw new Error("에러");
-  }
+  const response = await client.GET("/api/v1/posts", {
+    params: {
+      query: {
+        keyword: keyword,
+        keywordType: keywordType,
+      },
+    },
+  });
 
-  const rsData = await response.json();
-  const pageDto: PostItemPageDto = rsData.data;
+  const rsData = response.data!;
+  const pageDto = rsData.data!;
+  console.log(pageDto.items);
   return (
     <div>
       <h1>글 목록</h1>
-
       <div>응답 코드 : {rsData.code}</div>
       <div>결과 메시지 : {rsData.msg}</div>
-
       <div>totalPages : {pageDto.totalElementSize}</div>
       <div>totalItems : {pageDto.totalElementSize}</div>
       <div>currentPageNo : {pageDto.currentPageNum}</div>
@@ -41,19 +52,18 @@ export default async function PostList({
         <input type="submit" value="검색"></input>
       </form>
       <hr />
-
       <ul>
         <li>글1</li>
         <li>글2</li>
-        {pageDto.items?.map((item: PostDto) => {
+        {pageDto.items?.map((item) => {
           return (
             <li className="border-2 border-red-500 my-2 p-2" key={item.id}>
               <div>id : {item.id}</div>
               <div>title : {item.title}</div>
               <div>authorId : {item.authorId}</div>
               <div>authorName : {item.authorName}</div>
-              <div>published : {item.opened}</div>
-              <div>listed : {item.listed}</div>
+              <div>published : {item.opened ? "true" : "false"}</div>
+              <div>listed : {item.listed ? "true" : "false"}</div>
             </li>
           );
         })}
@@ -61,7 +71,3 @@ export default async function PostList({
     </div>
   );
 }
-
-type PostDto = components["schemas"]["PostDto"];
-
-type PostItemPageDto = components["schemas"]["PageDto"];
