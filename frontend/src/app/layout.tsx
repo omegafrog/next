@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Linden_Hill } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 
@@ -26,12 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
-        <header>
+        <header className="bg-black">
           <Link href={"/"}>메인</Link>
-          <a href="about">소개</a>
+          <Link href={"/about"}>소개</Link>
         </header>
         <div className="">{children}</div>
-        <footer className="">푸터</footer>
+        <footer className=""></footer>
       </body>
     </html>
   );
