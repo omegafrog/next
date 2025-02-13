@@ -1,7 +1,13 @@
-import { components } from "@/lib/backend/apiV1/schema";
+export default async function PostList({
+  searchParams,
+}: {
+  searchParams: { keywordType: string; keyword: string };
+}) {
+  const { keywordType = "title", keyword = "" } = await searchParams;
 
-export default async function PostList() {
-  const response = await fetch("http://localhost:8080/api/v1/posts");
+  const response = await fetch(
+    `http://localhost:8080/api/v1/posts?keyword-type=${keywordType}&keyword=${keyword}`
+  );
 
   if (!response.ok) {
     throw new Error("에러");
