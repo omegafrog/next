@@ -26,6 +26,20 @@ export default async function PostList({
       <div>totalItems : {pageDto.totalElementSize}</div>
       <div>currentPageNo : {pageDto.currentPageNum}</div>
       <div>pageSize : {pageDto.pageSize}</div>
+
+      <form>
+        <select name="keywordType">
+          <option value="title">제목</option>
+          <option value="content">내용</option>
+        </select>
+        <input
+          placeholder="검색어 입력"
+          type="text"
+          name="keyword"
+          defaultValue={keyword}
+        />
+        <input type="submit" value="검색"></input>
+      </form>
       <hr />
 
       <ul>
@@ -48,6 +62,6 @@ export default async function PostList({
   );
 }
 
-type PostDto = components["schemas"]["PostDto"]
+type PostDto = components["schemas"]["PostDto"];
 
-type PostItemPageDto = components["schemas"]["PageDto"]
+type PostItemPageDto = components["schemas"]["PageDto"];
