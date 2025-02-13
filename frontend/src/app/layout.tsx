@@ -24,11 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="">
         <header className="bg-black">
           <Link href={"/"}>메인</Link>
           <Link href={"/about"}>소개</Link>
+          <Link href={"/post/list"}>글 목록</Link>
         </header>
         <div className="">{children}</div>
         <footer className=""></footer>
