@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { components } from "@/lib/backend/apiV1/schema";
+import { useRouter } from "next/navigation";
 
 export default function ClientPage({
   rsData,
@@ -14,6 +17,7 @@ export default function ClientPage({
 }) {
   const pageDto = rsData.data;
 
+  const router = useRouter();
   return (
     <>
       <div>
@@ -25,7 +29,21 @@ export default function ClientPage({
         <div>currentPageNo : {pageDto.currentPageNum}</div>
         <div>pageSize : {pageDto.pageSize}</div>
 
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target as HTMLFormElement);
+            const searchKeyword = formData.get("keyword") as string;
+            const keywordType = formData.get("keywordType") as string;
+            const page = 0;
+            const pageSize = formData.get("size") as string;
+
+            router.push(
+              `/post/list?keywordType=${keywordType}&keyword=${searchKeyword}&page=${page}&size=${pageSize}`
+            );
+          }}
+        >
           <label className="ml-5" htmlFor="">
             페이지당 행 개수 :
           </label>
