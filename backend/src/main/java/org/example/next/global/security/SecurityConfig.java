@@ -28,6 +28,8 @@ public class SecurityConfig {
                                         HttpMethod.GET,
                                         "/api/*/posts/{id:\\d+}", "/api/*/posts", "/api/*/posts/{id:\\d+}", "/api/*/posts/{id:\\d+}/comments")
                                 .permitAll()
+                                .requestMatchers("/h2-console/**")
+                                .permitAll()
                                 .requestMatchers("/api/*/members/login", "/api/*/members/join", "/api/*/members/logout")
                                 .permitAll()
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")

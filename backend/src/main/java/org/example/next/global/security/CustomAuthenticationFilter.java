@@ -92,6 +92,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 "/api/v1/members/login",
                 "/api/v1/members/join",
                 "/api/v1/members/logout",
+                "/h2-console/**",
                 "swagger-ui/**",
                 "/v3/api-docs/**");
         for (String path : paths){
