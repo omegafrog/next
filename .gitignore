@@ -3,3 +3,4 @@
 backend/db_dev.mv.db
 backend/apiV1.json
 frontend/src/lib/backend/apiV1/schema.d.ts
+backend/db_dev.trace.db
