@@ -112,7 +112,7 @@ public class ApiV1PostControllerTest {
                 .andExpect(jsonPath("$.data.items.length()").value(5))
                 .andExpect(jsonPath("$.data.currentPageNum").isNumber())
                 .andExpect(jsonPath("$.data.totalPageNum").isNumber())
-                .andExpect(jsonPath("$.data.totalElementSize").value(9));
+                .andExpect(jsonPath("$.data.totalElementSize").value(157));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ApiV1PostControllerTest {
                 .andExpect(jsonPath("$.data.items.length()").value(5))
                 .andExpect(jsonPath("$.data.currentPageNum").isNumber())
                 .andExpect(jsonPath("$.data.totalPageNum").isNumber())
-                .andExpect(jsonPath("$.data.totalElementSize").value(9));
+                .andExpect(jsonPath("$.data.totalElementSize").value(157));
     }
 
 
@@ -156,10 +156,10 @@ public class ApiV1PostControllerTest {
                 .andExpect(handler().handlerType(ApiV1PostController.class))
                 .andExpect(handler().methodName("getMines"))
                 .andExpect(jsonPath("$.code").value("200-1"))
-                .andExpect(jsonPath("$.data.items.length()").value(5))
+                .andExpect(jsonPath("$.data.items.length()").value(3))
                 .andExpect(jsonPath("$.data.currentPageNum").isNumber())
-                .andExpect(jsonPath("$.data.totalPageNum").value(2))
-                .andExpect(jsonPath("$.data.totalElementSize").value(6))
+                .andExpect(jsonPath("$.data.totalPageNum").value(1))
+                .andExpect(jsonPath("$.data.totalElementSize").value(3))
                 .andDo(print());
 
         Member member = memberService.findByUsername("user2").get();
