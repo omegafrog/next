@@ -65,7 +65,10 @@ export default async function PostList({
         {Array.from({ length: pageDto.totalPageNum! }, (key, i) => i + 1).map(
           (page) => {
             return (
-              <Link key={page} href={`/post/list?page=${page}`}>
+              <Link
+                key={page}
+                href={`/post/list?page=${page}&keyworkd-type=${keywordType}&keyword=${keyword}`}
+              >
                 {page}
               </Link>
             );
