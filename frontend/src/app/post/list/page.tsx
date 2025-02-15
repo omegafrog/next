@@ -9,9 +9,19 @@ const client = createClient<paths>({
 export default async function PostList({
   searchParams,
 }: {
-  searchParams: { keywordType: string; keyword: string; page: number };
+  searchParams: {
+    keywordType: string;
+    keyword: string;
+    page: number;
+    size: number;
+  };
 }) {
-  const { keywordType = "title", keyword = "", page = 1 } = await searchParams;
+  const {
+    keywordType = "title",
+    keyword = "",
+    page = 1,
+    size = 10,
+  } = await searchParams;
 
   // const response = await fetch(
   //   `http://localhost:8080/api/v1/posts?keyword-type=${keywordType}&keyword=${keyword}`
@@ -23,6 +33,7 @@ export default async function PostList({
         keyword: keyword,
         keywordType: keywordType,
         page: page,
+        size: size,
       },
     },
   });
@@ -44,7 +55,7 @@ export default async function PostList({
         <label className="ml-5" htmlFor="">
           페이지당 행 개수 :
         </label>
-        <select name="pageSize">
+        <select name="size" defaultValue={10}>
           <option value="10">10</option>
           <option value="30">30</option>
           <option value="50">50</option>
@@ -65,7 +76,10 @@ export default async function PostList({
         {Array.from({ length: pageDto.totalPageNum! }, (key, i) => i + 1).map(
           (page) => {
             return (
-              <Link key={page} href={`/post/list?page=${page}`}>
+              <Link
+                key={page}
+                href={`/post/list?keywordType=${keywordType}&keyword=${keyword}&size=${size}&page=${page}`}
+              >
                 {page}
               </Link>
             );
