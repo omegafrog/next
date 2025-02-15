@@ -1,4 +1,5 @@
 import { paths } from "@/lib/backend/apiV1/schema";
+import Link from "next/link";
 import createClient from "openapi-fetch";
 
 const client = createClient<paths>({
@@ -8,9 +9,9 @@ const client = createClient<paths>({
 export default async function PostList({
   searchParams,
 }: {
-  searchParams: { keywordType: string; keyword: string };
+  searchParams: { keywordType: string; keyword: string; page: number };
 }) {
-  const { keywordType = "title", keyword = "" } = await searchParams;
+  const { keywordType = "title", keyword = "", page = 1 } = await searchParams;
 
   // const response = await fetch(
   //   `http://localhost:8080/api/v1/posts?keyword-type=${keywordType}&keyword=${keyword}`
@@ -21,6 +22,7 @@ export default async function PostList({
       query: {
         keyword: keyword,
         keywordType: keywordType,
+        page: page,
       },
     },
   });
@@ -33,12 +35,20 @@ export default async function PostList({
       <h1>글 목록</h1>
       <div>응답 코드 : {rsData.code}</div>
       <div>결과 메시지 : {rsData.msg}</div>
-      <div>totalPages : {pageDto.totalElementSize}</div>
+      <div>totalPages : {pageDto.totalPageNum}</div>
       <div>totalItems : {pageDto.totalElementSize}</div>
       <div>currentPageNo : {pageDto.currentPageNum}</div>
       <div>pageSize : {pageDto.pageSize}</div>
 
       <form>
+        <label className="ml-5" htmlFor="">
+          페이지당 행 개수 :
+        </label>
+        <select name="pageSize">
+          <option value="10">10</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+        </select>
         <select name="keywordType">
           <option value="title">제목</option>
           <option value="content">내용</option>
@@ -51,6 +61,17 @@ export default async function PostList({
         />
         <input type="submit" value="검색"></input>
       </form>
+      <div className="flex gap-3">
+        {Array.from({ length: pageDto.totalPageNum! }, (key, i) => i + 1).map(
+          (page) => {
+            return (
+              <Link key={page} href={`/post/list?page=${page}`}>
+                {page}
+              </Link>
+            );
+          }
+        )}
+      </div>
       <hr />
       <ul>
         <li>글1</li>
