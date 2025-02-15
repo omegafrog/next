@@ -78,6 +78,7 @@ export default async function PostList({
             return (
               <Link
                 key={page}
+                className={page == page ? `text-red-500` : `text-blue-500`}
                 href={`/post/list?keywordType=${keywordType}&keyword=${keyword}&size=${size}&page=${page}`}
               >
                 {page}
