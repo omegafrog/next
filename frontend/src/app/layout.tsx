@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Linden_Hill } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import ClinetLayout from "./ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,17 +24,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="">
-        <header className="bg-black">
-          <Link href={"/"}>메인</Link>
-          <Link href={"/about"}>소개</Link>
-          <Link href={"/post/list"}>글 목록</Link>
-        </header>
-        <div className="">{children}</div>
-        <footer className=""></footer>
-      </body>
-    </html>
-  );
+  return <ClinetLayout>{children}</ClinetLayout>;
 }
