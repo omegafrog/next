@@ -83,18 +83,18 @@ export default function ClientPage({
         </div>
         <hr />
         <ul>
-          <li>글1</li>
-          <li>글2</li>
           {pageDto.items?.map((item) => {
             return (
-              <li className="border-2 border-red-500 my-2 p-2" key={item.id}>
-                <div>id : {item.id}</div>
-                <div>title : {item.title}</div>
-                <div>authorId : {item.authorId}</div>
-                <div>authorName : {item.authorName}</div>
-                <div>published : {item.opened ? "true" : "false"}</div>
-                <div>listed : {item.listed ? "true" : "false"}</div>
-              </li>
+              <Link key={item.id} href={`/post/${item.id}`}>
+                <li className="border-2 border-red-500 my-2 p-2">
+                  <div>id : {item.id}</div>
+                  <div>title : {item.title}</div>
+                  <div>authorId : {item.authorId}</div>
+                  <div>authorName : {item.authorName}</div>
+                  <div>published : {item.opened ? "true" : "false"}</div>
+                  <div>listed : {item.listed ? "true" : "false"}</div>
+                </li>
+              </Link>
             );
           })}
         </ul>
