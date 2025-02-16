@@ -26,7 +26,7 @@ export default async function Page({
   const rsData = response.data!;
   if (response.error) {
     console.log(response);
-    return <div>존재하지 않는 페이지입니다.</div>;
+    return <div>{response.error.msg}</div>;
   }
   const post = rsData.data;
   return <ClientPage post={post} />;
