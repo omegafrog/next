@@ -1,6 +1,7 @@
 "use client";
 
 import { components } from "@/lib/backend/apiV1/schema";
+import Link from "next/link";
 
 export default function ClientPage({
   post,
@@ -17,6 +18,10 @@ export default function ClientPage({
         <div>수정일 : {post.modifiedDatetime}</div>
         <div>공개 여부 : {post.opened ? "true" : "false"}</div>
         <div>리스팅 여부 : {post.listed ? "true" : "false"}</div>
+      </div>
+      <hr />
+      <div>
+        <Link href={`/post/${post.id}/modify`}>수정</Link>
       </div>
     </>
   );
