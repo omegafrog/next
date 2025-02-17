@@ -35,7 +35,7 @@ public class ApiV1CommentControllerTest {
     @BeforeEach
     void setUp() {
         loginMember = memberService.findByUsername("user2").get();
-        token = memberService.getAuthToken(loginMember);
+        token = memberService.getAuthToken(loginMember)+"/"+loginMember.getApiKey();
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ApiV1CommentControllerTest {
         String content = "content";
 
         Member user1 = memberService.findByUsername("user1").get();
-        String authToken = memberService.getAuthToken(user1);
+        String authToken = memberService.getAuthToken(user1)+"/"+user1.getApiKey();
 
         ResultActions perform = mockmvc
                 .perform(
@@ -120,7 +120,7 @@ public class ApiV1CommentControllerTest {
         Long commentId = 1L;
 
         Member user1 = memberService.findByUsername("user1").get();
-        String authToken = memberService.getAuthToken(user1);
+        String authToken = memberService.getAuthToken(user1)+"/"+user1.getApiKey();
         ResultActions perform = mockmvc
                 .perform(
                         delete("/api/v1/posts/%d/comments/%d".formatted(postId, commentId))

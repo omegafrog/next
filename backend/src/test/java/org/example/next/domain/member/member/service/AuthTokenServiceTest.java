@@ -33,6 +33,8 @@ public class AuthTokenServiceTest {
     @Value(value = "${custom.jwt.secret-key}")
     private String keyString;
 
+    @Value(value = "${custom.jwt.expire-seconds}")
+    private int expireSeconds;
 
     @Test
     void test(){
@@ -41,7 +43,7 @@ public class AuthTokenServiceTest {
                 .add("name", "Paul")
                 .add("age", 23)
                 .build();
-        String jwt = Util.Jwt.createToken(keyString, claims);
+        String jwt = Util.Jwt.createToken(keyString, expireSeconds, claims);
         System.out.println("jwt = " + jwt);
 
         assertThat(jwt).isNotNull();

@@ -34,10 +34,7 @@ public class Util {
 
     public static class Jwt{
 
-        @Value("${custom.jwt.expire-seconds}")
-        private static int expireSeconds;
-
-        public static String createToken(String keyString, Map<String, Object> claims) {
+        public static String createToken(String keyString, int expireSeconds, Map<String, Object> claims) {
 
             SecretKey secretKey = Keys.hmacShaKeyFor(keyString.getBytes());
             Date issuedAt = new Date();

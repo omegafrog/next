@@ -10,6 +10,7 @@ export default function ClientPage({
   post: components["schemas"]["PostWithContentDto"];
   me: components["schemas"]["MemberDto"];
 }) {
+  console.log(me, post);
   return (
     <>
       <div>

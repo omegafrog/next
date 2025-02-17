@@ -72,6 +72,7 @@ public class MemberService {
         return Optional.of(Member.builder()
                 .id((Long) payload.get("id"))
                 .username((String) payload.get("username"))
+                        .nickname((String) payload.get("nickname"))
                 .build());
     }
 

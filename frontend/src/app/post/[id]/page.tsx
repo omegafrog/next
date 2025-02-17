@@ -1,6 +1,7 @@
 import ClientPage from "./ClientPage";
 import client from "@/lib/backend/apiV1/fetchClient";
 import { components } from "@/lib/backend/apiV1/schema";
+import { cookies } from "next/headers";
 
 export default async function Page({
   params,

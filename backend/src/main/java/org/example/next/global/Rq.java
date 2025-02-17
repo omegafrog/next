@@ -45,7 +45,7 @@ public class Rq {
     }
 
     public void setLogin(Member member) {
-        SecurityUser user = new SecurityUser(member.getId(), member.getUsername(), member.getPassword(),List.of());
+        SecurityUser user = new SecurityUser(member.getId(), member.getUsername(), member.getPassword(), member.getNickname(), List.of());
 
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
@@ -70,6 +70,7 @@ public class Rq {
         return Member.builder()
                 .id(user.getId())
                 .username(user.getUsername())
+                .nickname(user.getNickname())
                 .build();
     }
     public String getHeader(String name) {

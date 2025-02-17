@@ -3,9 +3,9 @@ import client from "./lib/backend/apiV1/fetchClient";
 import { cookies } from "next/headers";
 
 // 항상 토큰을 재발급요청하지 말고
-// 토큰이 만료되었고 로그인한 상태일 때만 재발급 요청을 보내자자
+// 토큰이 만료되었고 로그인한 상태일 때만 재발급 요청을 보내자
 export async function middleware(request: NextRequest) {
-  // 쿠키로부터 토큰 얻기기
+  // 쿠키로부터 토큰 얻기
   const myCookies = await cookies();
   const accessToken = myCookies.get("accessToken");
 
@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
   let payload = null;
 
   if (accessToken) {
-    // 토큰 파싱싱
+    // 토큰 파싱
     try {
       const tokenParts = accessToken.value.split(".");
       payload = JSON.parse(Buffer.from(tokenParts[1], "base64").toString());
@@ -30,12 +30,12 @@ export async function middleware(request: NextRequest) {
   console.log("------------------");
   console.log(isLogin, isExpired);
 
-  // 로그인 상태이고 토큰 만료시 재발급급
+  // 로그인 상태이고 토큰 만료시 재발급
   if (isLogin && isExpired) {
     const nextResponse = NextResponse.next();
 
     // 서버로부터 토큰 재발급 받음.
-    // 재발급 받은 쿠키는 set-cookie에 들어가 있을 것것
+    // 재발급 받은 쿠키는 set-cookie에 들어가 있을 것
     const response = await client.GET("/api/v1/members/me", {
       headers: {
         cookie: (await cookies()).toString(),
