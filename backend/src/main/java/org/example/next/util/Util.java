@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.example.next.global.dto.RsData;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -33,7 +34,8 @@ public class Util {
 
     public static class Jwt{
 
-        private final static int expireSeconds = 60 * 60 * 24 * 365;
+        @Value("${custom.jwt.expire-seconds}")
+        private static int expireSeconds;
 
         public static String createToken(String keyString, Map<String, Object> claims) {
 
