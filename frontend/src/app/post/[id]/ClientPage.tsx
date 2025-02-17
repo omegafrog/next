@@ -5,8 +5,10 @@ import Link from "next/link";
 
 export default function ClientPage({
   post,
+  me,
 }: {
   post: components["schemas"]["PostWithContentDto"];
+  me: components["schemas"]["MemberDto"];
 }) {
   return (
     <>
@@ -20,9 +22,7 @@ export default function ClientPage({
         <div>리스팅 여부 : {post.listed ? "true" : "false"}</div>
       </div>
       <hr />
-      <div>
-        <Link href={`/post/${post.id}/modify`}>수정</Link>
-      </div>
+      {me.id === post.authorId && <Link href={`/post/${post.id}/modify`}>수정</Link>}
     </>
   );
 }

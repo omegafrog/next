@@ -1,5 +1,6 @@
 import ClientPage from "./ClientPage";
 import client from "@/lib/backend/apiV1/fetchClient";
+import { components } from "@/lib/backend/apiV1/schema";
 
 export default async function Page({
   params,
@@ -10,6 +11,34 @@ export default async function Page({
 }) {
   const { id } = await params;
 
+  try {
+    const post = await getPost(id);
+    const me = await getMe();
+    return <ClientPage post={post} me={me} />;
+  } catch (error) {
+    console.log(error);
+    if (typeof window !== "undefined") {
+      alert(error);
+      return;
+    }
+  }
+}
+
+async function getMe(): Promise<components["schemas"]["MemberDto"]> {
+  const response = await client.GET("/api/v1/members/me", {
+    credentials: "include",
+  });
+
+  if (response.error) {
+    return { id: 0 };
+  }
+
+  return response.data.data;
+}
+
+async function getPost(
+  id: number
+): Promise<components["schemas"]["PostWithContentDto"]> {
   const response = await client.GET("/api/v1/posts/{id}", {
     params: {
       path: {
@@ -18,11 +47,9 @@ export default async function Page({
     },
   });
 
-  const rsData = response.data!;
   if (response.error) {
-    console.log(response);
-    return <div>{response.error.msg}</div>;
+    throw new Error(response.error.msg);
   }
-  const post = rsData.data;
-  return <ClientPage post={post} />;
+
+  return response.data.data;
 }
