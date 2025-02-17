@@ -23,7 +23,7 @@ export default function Page() {
       console.log(response);
       return <div>{response.error.msg}</div>;
     }
-    router.push("/post/list");
+    window.location.href = "/post/list";
   }
   return (
     <form onSubmit={login} className="flex flex-col w-1/4 gap-3">
