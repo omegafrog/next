@@ -2,7 +2,6 @@
 import client from "@/lib/backend/apiV1/fetchClient";
 import { components } from "@/lib/backend/apiV1/schema";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 export default function ClinetLayout({
   children,
   me,
@@ -10,7 +9,6 @@ export default function ClinetLayout({
   children: React.ReactNode;
   me: components["schemas"]["MemberDto"];
 }>) {
-  const router = useRouter();
   const isLoggedIn = me.id !== 0;
   return (
     <html lang="en">
@@ -21,6 +19,7 @@ export default function ClinetLayout({
           <Link href="/post/list">글 목록</Link>
           {isLoggedIn && <Link href="/post/write">글 작성</Link>}
           {!isLoggedIn && <Link href="/member/login">로그인</Link>}
+          {!isLoggedIn && <Link href="/member/register">회원가입</Link>}
           {isLoggedIn && <Link href="/member/me">내 정보</Link>}
           {isLoggedIn && (
             <Link
