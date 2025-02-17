@@ -18,15 +18,19 @@ public class AuthTokenService {
     @Value(value = "${custom.jwt.secret-key}")
     private String keyString;
 
+    @Value(value = "${custom.jwt.expire-seconds}")
+    private int expireSeconds;
+
     String genAccessToken(Member member) {
 
         Claims claims =
                 Jwts.claims()
-                    .add("id", member.getId())
-                    .add("username", member.getUsername())
-                    .build();
+                        .add("id", member.getId())
+                        .add("username", member.getUsername())
+                        .add("nickname", member.getNickname())
+                        .build();
 
-        return Util.Jwt.createToken(keyString, claims);
+        return Util.Jwt.createToken(keyString,  expireSeconds, claims);
     }
 
     Map<String, Object> getPayload(String token, String keyString) {

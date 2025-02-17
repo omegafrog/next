@@ -46,8 +46,8 @@ public class ApiV1PostControllerTest {
     void setUp() {
         loginMember = memberService.findByUsername("user2").get();
         loginMember2 = memberService.findByUsername("user1").get();;
-        token1 = memberService.getAuthToken(loginMember);
-        token2 = memberService.getAuthToken(loginMember2);
+        token1 = memberService.getAuthToken(loginMember)+"/"+loginMember.getApiKey();
+        token2 = memberService.getAuthToken(loginMember2)+"/"+loginMember2.getApiKey();
     }
 
     @Test
@@ -339,7 +339,7 @@ public class ApiV1PostControllerTest {
         perform
                 .andExpect(status().isOk())
                 .andExpect(handler().handlerType(ApiV1PostController.class))
-                .andExpect(handler().methodName("modify"))
+                .andExpect(handler().methodName("modifyPost"))
                 .andExpect(jsonPath("$.code").value("200-1"))
                 .andExpect(jsonPath("$.msg").value("%d번 글 수정이 완료되었습니다.".formatted(postId)))
                 .andExpect(jsonPath("$.data").exists())
@@ -367,12 +367,12 @@ public class ApiV1PostControllerTest {
         String title = "changedTitle";
         String content = "changedContent";
         Member user3 = memberService.findByUsername("user3").get();
-        String authToken = memberService.getAuthToken(user3);
+        String authToken = memberService.getAuthToken(user3)+"/"+user3.getApiKey();
         ResultActions perform = modifyPost(postId, title, content, true, true,authToken );
         perform
                 .andExpect(status().isForbidden())
                 .andExpect(handler().handlerType(ApiV1PostController.class))
-                .andExpect(handler().methodName("modify"))
+                .andExpect(handler().methodName("modifyPost"))
                 .andExpect(jsonPath("$.code").value("403-1"))
                 .andExpect(jsonPath("$.msg").value("자신이 작성한 글만 수정 가능합니다."));
     }
@@ -387,7 +387,7 @@ public class ApiV1PostControllerTest {
         perform
                 .andExpect(status().isBadRequest())
                 .andExpect(handler().handlerType(ApiV1PostController.class))
-                .andExpect(handler().methodName("modify"))
+                .andExpect(handler().methodName("modifyPost"))
                 .andExpect(jsonPath("$.code").value("400-1"))
                 .andExpect(jsonPath("$.msg").value("content : Length : length must be between 3 and 2147483647\ncontent : NotBlank : must not be blank"));
     }
@@ -399,12 +399,12 @@ public class ApiV1PostControllerTest {
         String title = "changedTitle";
         String content = "";
         Member admin = memberService.findByUsername("admin").get();
-        String authToken = memberService.getAuthToken(admin);
+        String authToken = memberService.getAuthToken(admin)+"/"+admin.getApiKey();
         ResultActions perform = modifyPost(postId, title, content, true, true, authToken);
         perform
                 .andExpect(status().isBadRequest())
                 .andExpect(handler().handlerType(ApiV1PostController.class))
-                .andExpect(handler().methodName("modify"))
+                .andExpect(handler().methodName("modifyPost"))
                 .andExpect(jsonPath("$.code").value("400-1"))
                 .andExpect(jsonPath("$.msg").value("content : Length : length must be between 3 and 2147483647\ncontent : NotBlank : must not be blank"));
     }

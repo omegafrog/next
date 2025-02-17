@@ -41,7 +41,7 @@ class ApiV1MemberControllerTest {
     @BeforeEach
     void setUp() {
         loginMember = memberService.findByUsername("user1").get();
-        token = memberService.getAuthToken(loginMember);
+        token = memberService.getAuthToken(loginMember)+"/"+loginMember.getApiKey();
     }
 
     private static ResultActions checkMember(ResultActions resultActions, Member user1, String baseDataPath) throws Exception {
