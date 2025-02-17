@@ -19,6 +19,7 @@ export default function ClinetLayout({
           <Link href="/">메인</Link>
           <Link href="/about">소개</Link>
           <Link href="/post/list">글 목록</Link>
+          {isLoggedIn && <Link href="/post/write">글 작성</Link>}
           {!isLoggedIn && <Link href="/member/login">로그인</Link>}
           {isLoggedIn && <Link href="/member/me">내 정보</Link>}
           {isLoggedIn && (
