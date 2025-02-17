@@ -7,6 +7,7 @@ import org.example.next.domain.post.post.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,16 +34,18 @@ public class PostService {
     }
 
     public Page<Post> getItems(int currentPageNum, int pageSize) {
-        Pageable pageable = PageRequest.of(currentPageNum, pageSize);
+        Pageable pageable = PageRequest.of(currentPageNum, pageSize, Sort.by("id").descending(
+
+        ));
         return postRepository.findAllByListed(true, pageable);
     }
 
     public Page<Post> searchItemByTitle(int currentPageNum, int pageSize, String keyword) {
-        Pageable pageable = PageRequest.of(currentPageNum, pageSize);
+        Pageable pageable = PageRequest.of(currentPageNum, pageSize, Sort.by("id").descending());
         return postRepository.findByListedAndTitleLike(true, "%"+keyword+"%", pageable);
     }
     public Page<Post> searchItemByContent(int currentPageNum, int pageSize, String keyword) {
-        Pageable pageable = PageRequest.of(currentPageNum, pageSize);
+        Pageable pageable = PageRequest.of(currentPageNum, pageSize ,Sort.by("id").descending());
         return postRepository.findByListedAndContentLike(true, "%"+keyword+"%", pageable);
     }
     public Optional<Post> getItem(long id) {

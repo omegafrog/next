@@ -17,8 +17,6 @@ import org.example.next.global.dto.RsData;
 import org.example.next.global.exception.ServiceException;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "ApiV1PostController", description = "글 API")
@@ -125,10 +123,11 @@ public class ApiV1PostController {
     }
 
 
-    record ModifyReqBody(@NotBlank @Length(min = 3) String title,
-                         @NotBlank @Length(min = 3) String content,
-                         boolean opened,
-                         boolean listed) {
+    record PostModifyReqBody(
+            @NotBlank @Length(min = 3) String title,
+            @NotBlank @Length(min = 3) String content,
+            boolean opened,
+            boolean listed) {
     }
 
     @Operation(
@@ -136,8 +135,7 @@ public class ApiV1PostController {
             description = "작성자와 관리자만 글 수정 가능"
     )
     @PutMapping("{id}")
-    public RsData<PostWithContentDto> modify(@PathVariable long id, @RequestBody @Valid ModifyReqBody body
-    ) {
+    public RsData<PostWithContentDto> modifyPost(@RequestBody @Valid PostModifyReqBody body, @PathVariable long id) {
 
         Member actor = rq.getActor();
         Post post = postService.getItem(id).get();
@@ -147,7 +145,7 @@ public class ApiV1PostController {
         }
 
         post.canModify(actor);
-        Post modify = postService.modify(post, body.title(), body.content(), body.opened, body.listed);
+        Post modify = postService.modify(post, body.title(), body.content(), body.opened(), body.listed());
         return new RsData<>(
                 "200-1",
                 "%d번 글 수정이 완료되었습니다.".formatted(id),
@@ -168,8 +166,7 @@ public class ApiV1PostController {
             description = "로그인 한 사용자만 글 작성 가능"
     )
     @PostMapping
-    public RsData<PostWithContentDto> write(@RequestBody @Valid WriteReqBody body,
-                                            @AuthenticationPrincipal UserDetails principal) {
+    public RsData<PostWithContentDto> write(@RequestBody @Valid WriteReqBody body) {
 
         Member actor = rq.getActor();
 
