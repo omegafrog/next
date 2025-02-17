@@ -83,7 +83,7 @@ public class ApiV1CommentController {
     }
 
 
-    record ModifyReqBody(String content) {}
+    record CommentModifyReqBody(String content) {}
 
     @Operation(
             summary = "댓글 수정",
@@ -91,7 +91,7 @@ public class ApiV1CommentController {
     )
     @PutMapping("{id}")
     @Transactional
-    public RsData<EmptyData> modify(@PathVariable long postId, @PathVariable long id, @RequestBody ModifyReqBody reqBody) {
+    public RsData<EmptyData> modify(@PathVariable long postId, @PathVariable long id, @RequestBody CommentModifyReqBody reqBody) {
 
         Member actor = rq.getActor();
 

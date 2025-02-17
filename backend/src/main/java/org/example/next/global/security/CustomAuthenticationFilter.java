@@ -49,7 +49,7 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
                 return null;
             }
 
-            return new AuthToken(tokenBits[1], tokenBits[0]);
+            return new AuthToken(tokenBits[0], tokenBits[1]);
         }
 
         String accessToken = rq.getValueFromCookie("accessToken");
