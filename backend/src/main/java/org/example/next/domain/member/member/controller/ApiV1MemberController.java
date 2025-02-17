@@ -2,7 +2,6 @@ package org.example.next.domain.member.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +50,7 @@ public class ApiV1MemberController {
 
     @Operation(summary = "로그인", description = "로그인 성공 시 ApiKey와 AccessToken 반환. 쿠키로도 반환")
     @PostMapping("/login")
-    public RsData<LoginResBody> login(@Valid @RequestBody LoginReqBody reqBody, HttpServletResponse response) {
+    public RsData<LoginResBody> login(@Valid @RequestBody LoginReqBody reqBody) {
         Member member = memberService.login(reqBody.username, reqBody.password);
 
         String authToken = memberService.getAuthToken(member);

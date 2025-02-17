@@ -48,7 +48,7 @@ public class MemberService {
     }
 
     public String getAuthToken(Member member){
-        return authTokenService.genAccessToken(member) + "/" + member.getApiKey();
+        return authTokenService.genAccessToken(member);
     }
 
     public Member login(String username, String password) {
