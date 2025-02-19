@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function ClientPage({
   post,
-  me,
+  meNickname,
 }: {
   post: components["schemas"]["PostWithContentDto"];
-  me: components["schemas"]["MemberDto"];
+  meNickname: string;
 }) {
-  console.log(me, post);
+  console.log(meNickname, post);
   return (
     <>
       <div>
@@ -23,7 +23,9 @@ export default function ClientPage({
         <div>리스팅 여부 : {post.listed ? "true" : "false"}</div>
       </div>
       <hr />
-      {me.id === post.authorId && <Link href={`/post/${post.id}/modify`}>수정</Link>}
+      {meNickname === post.authorName && (
+        <Link href={`/post/${post.id}/modify`}>수정</Link>
+      )}
     </>
   );
 }

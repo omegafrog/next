@@ -6,26 +6,7 @@ import { cookies } from "next/headers";
 // 토큰이 만료되었고 로그인한 상태일 때만 재발급 요청을 보내자
 export async function middleware(request: NextRequest) {
   // 쿠키로부터 토큰 얻기
-  const myCookies = await cookies();
-  const accessToken = myCookies.get("accessToken");
-
-  let isExpired = true;
-  let payload = null;
-
-  if (accessToken) {
-    // 토큰 파싱
-    try {
-      const tokenParts = accessToken.value.split(".");
-      payload = JSON.parse(Buffer.from(tokenParts[1], "base64").toString());
-      const expTimestamp = payload.exp * 1000; // exp는 초 단위이므로 밀리초로 변환
-      isExpired = Date.now() > expTimestamp;
-      console.log("토큰 만료 여부:", isExpired);
-    } catch (e) {
-      console.error("토큰 파싱 중 오류 발생:", e);
-    }
-  }
-
-  let isLogin = payload !== null;
+  const { payload, isExpired, isLogin } = await getAccessTokenFromCookies();
 
   console.log("------------------");
   console.log(isLogin, isExpired);
@@ -54,6 +35,30 @@ export async function middleware(request: NextRequest) {
   // 나머지는 접근이 가능해야 하므로 이를 필터링
   if (!isLogin && isProtectedRoute(request.nextUrl.pathname)) {
     return createUnauthorizedResponse();
+  }
+
+  async function getAccessTokenFromCookies() {
+    const myCookies = await cookies();
+    const accessToken = myCookies.get("accessToken");
+
+    let isExpired = true;
+    let payload = null;
+    let isLogin = false;
+    if (accessToken) {
+      // 토큰 파싱
+      try {
+        const tokenParts = accessToken.value.split(".");
+        payload = JSON.parse(Buffer.from(tokenParts[1], "base64").toString());
+        const expTimestamp = payload.exp * 1000; // exp는 초 단위이므로 밀리초로 변환
+        isExpired = Date.now() > expTimestamp;
+        console.log("토큰 만료 여부:", isExpired);
+        isLogin = payload !== null;
+
+      } catch (e) {
+        console.error("토큰 파싱 중 오류 발생:", e);
+      }
+    }
+    return { payload, isExpired, isLogin };
   }
 }
 function isProtectedRoute(pathname: string): boolean {

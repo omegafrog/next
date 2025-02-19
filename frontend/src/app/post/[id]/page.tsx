@@ -11,11 +11,14 @@ export default async function Page({
   };
 }) {
   const { id } = await params;
+  const {  payload } = await getAccessTokenFromCookies();
 
+  const nickname = payload.nickname;
+  
   try {
     const post = await getPost(id);
-    const me = await getMe();
-    return <ClientPage post={post} me={me} />;
+
+    return <ClientPage post={post} meNickname={nickname} />;
   } catch (error) {
     console.log(error);
     if (typeof window !== "undefined") {
@@ -24,17 +27,27 @@ export default async function Page({
     }
   }
 }
+async function getAccessTokenFromCookies() {
+  const myCookies = await cookies();
+  const accessToken = myCookies.get("accessToken");
 
-async function getMe(): Promise<components["schemas"]["MemberDto"]> {
-  const response = await client.GET("/api/v1/members/me", {
-    credentials: "include",
-  });
-
-  if (response.error) {
-    return { id: 0 };
+  let isExpired = true;
+  let payload = null;
+  let isLogin = false;
+  if (accessToken) {
+    // 토큰 파싱
+    try {
+      const tokenParts = accessToken.value.split(".");
+      payload = JSON.parse(Buffer.from(tokenParts[1], "base64").toString());
+      const expTimestamp = payload.exp * 1000; // exp는 초 단위이므로 밀리초로 변환
+      isExpired = Date.now() > expTimestamp;
+      console.log("토큰 만료 여부:", isExpired);
+      isLogin = payload !== null;
+    } catch (e) {
+      console.error("토큰 파싱 중 오류 발생:", e);
+    }
   }
-
-  return response.data.data;
+  return { payload, isExpired, isLogin };
 }
 
 async function getPost(
